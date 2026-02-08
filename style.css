@@ -6,7 +6,7 @@
 }
 
 body {
-    background-image: url('maxresdefault (1).jpg'); 
+    background-image: url('background.png'); 
     background-position: center center; 
     background-repeat: no-repeat; 
     background-attachment: fixed; 
@@ -169,5 +169,6 @@ p {
     color: #666;
     margin-top: 2px;
 }
+
 
 
