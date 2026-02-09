@@ -1,3 +1,4 @@
+/* Базовые настройки */
 * {
     margin: 0;
     padding: 0;
@@ -7,24 +8,30 @@
 
 body {
     background-image: url('thumb-1920-1353838.png'); 
-    background-position: center center; 
+    background-color: #0a0a0a; /* Фолбэк цвет */
+    background-position: center top; 
     background-repeat: no-repeat; 
     background-attachment: fixed; 
     background-size: cover; 
     color: white;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .overlay {
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background: url('https://www.transparenttextures.com/patterns/stardust.png'); 
-    opacity: 0.3;
+    opacity: 0.2;
     pointer-events: none;
+    z-index: 1;
 }
 
+/* Шапка */
 header {
     display: flex;
     justify-content: space-between;
@@ -38,138 +45,139 @@ header {
     font-weight: bold;
     font-size: 1.5rem;
     letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(37, 117, 252, 0.5);
 }
 
 nav {
     display: flex;
-    gap: 10px;
+    gap: 15px;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    padding: 8px 15px;
-    background: rgba(0, 0, 0, 0.8);
+    padding: 8px 18px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 5px;
     font-size: 0.9rem;
     transition: 0.3s;
 }
 
 nav a:hover {
-    background: rgba(0, 0, 0, 1);
+    background: rgba(37, 117, 252, 0.2);
+    border-color: #2575fc;
 }
 
-.btn-login {
-    background: #2575fc;
-    border: none;
-    padding: 10px 20px;
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    box-shadow: 0 0 15px rgba(37, 117, 252, 0.5);
-}
-
+/* Главный блок */
 .hero {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 10%;
-    height: 80vh;
+    height: 85vh;
     position: relative;
-}
-
-.content {
-    max-width: 500px;
     z-index: 5;
 }
 
+.content {
+    max-width: 600px;
+}
+
 h1 {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
 p {
     line-height: 1.6;
-    color: #bbb;
+    color: #ccc;
     margin-bottom: 30px;
 }
 
-.buttons button {
-    padding: 12px 30px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    margin-right: 15px;
-    transition: 0.3s;
-}
-
-/* Кнопка "Скачать" (a) */
+/* Кнопка */
 .btn-buy {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
-    padding: 12px 32px;
+    padding: 15px 40px;
     border-radius: 8px;
-
     background: linear-gradient(135deg, #2575fc, #1a4fd8);
     color: white;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1rem;
-
-    box-shadow: 0 0 20px rgba(37, 117, 252, 0.45);
-    transition: 0.25s ease;
+    font-size: 1.1rem;
+    box-shadow: 0 0 25px rgba(37, 117, 252, 0.4);
+    transition: 0.3s ease;
 }
 
-/* Наведение */
 .btn-buy:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 10px 30px rgba(37, 117, 252, 0.65);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(37, 117, 252, 0.6);
 }
 
-/* Нажатие */
-.btn-buy:active {
-    transform: translateY(0) scale(0.98);
+/* FAQ Секция */
+.faq {
+    padding: 100px 10% 50px;
+    position: relative;
+    z-index: 5;
 }
 
-
-.btn-more {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.2);
+.faq-container {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.btn-buy:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4); 
+.faq h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: #fff;
 }
 
+.faq-item {
+    background: rgba(0, 0, 0, 0.7);
+    border-left: 4px solid #2575fc;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
 
-/* Пункт меню "В разработке" */
+.faq-item:hover {
+    background: rgba(37, 117, 252, 0.05);
+    transform: translateX(10px);
+}
+
+.faq-question {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #2575fc;
+    margin-bottom: 10px;
+}
+
+.faq-answer {
+    color: #bbb;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+/* Инвалид кнопка */
 .nav-disabled {
     padding: 8px 15px;
     border-radius: 5px;
-
-    background: rgba(0, 0, 0, 0.5);
-    color: #888;
-
+    background: rgba(255, 255, 255, 0.05);
+    color: #666;
     font-size: 0.9rem;
     cursor: not-allowed;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.nav-disabled small {
-    font-size: 0.65rem;
-    color: #666;
-    margin-top: 2px;
+footer {
+    text-align: center;
+    padding: 40px;
+    color: #444;
+    font-size: 0.8rem;
+    z-index: 5;
+    position: relative;
 }
-
-
-
-
