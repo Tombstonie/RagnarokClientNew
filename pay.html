@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ragnarok Client — Тарифы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0d0d0f;
+            color: #e0e0e0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: url('keyart.png') center/cover no-repeat fixed;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 1;
+        }
+        header {
+            position: relative;
+            margin-right: 15px;
+            z-index: 10;
+            border-bottom: 1px solid #1f1f24;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }	
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        nav a,
+        .nav-disabled {
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #a0a0a8;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        .nav-disabled {
+            color: #505060;
+            cursor: not-allowed;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        .pricing-hero {
+            text-align: center;
+            padding: 100px 0 60px;
+        }
+        .pricing-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 16px;
+        }
+        .pricing-hero p {
+            font-size: 1.25rem;
+            color: #a0a0a8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .toggle {
+            display: inline-flex;
+            background: #1a1a1f;
+            border-radius: 999px;
+            padding: 4px;
+            margin: 40px 0 60px;
+        }
+        .toggle button {
+            padding: 8px 24px;
+            border: none;
+            background: transparent;
+            color: #a0a0a8;
+            font-weight: 500;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .toggle button.active {
+            background: #2a2a32;
+            color: #ffffff;
+        }
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .plan {
+            background: #111114;
+            border: 1px solid #1f1f24;
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+            transition: all 0.25s ease;
+        }
+        .plan:hover {
+            border-color: #3a3a44;
+            transform: translateY(-4px);
+        }
+        .plan.recommended {
+            border-color: #6366f1;
+            background: rgba(99, 102, 241, 0.06);
+            box-shadow: 0 0 40px rgba(99, 102, 241, 0.12);
+        }
+        .recommended-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6366f1;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            padding: 4px 16px;
+            border-radius: 999px;
+        }
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .plan-price {
+            font-size: 2.75rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 16px 0 4px;
+        }
+        .plan-period {
+            font-size: 1rem;
+            color: #a0a0a8;
+        }
+        .includes {
+            margin: 32px 0;
+            font-size: 0.95rem;
+            color: #a0a0a8;
+        }
+        .includes strong {
+            color: #ffffff;
+            display: block;
+            margin-bottom: 16px;
+        }
+        .feature {
+            margin: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #d0d0d8;
+        }
+        .feature.good::before {
+            content: "✓";
+            color: #4ade80;
+            font-weight: bold;
+        }
+        .feature.bad::before {
+            content: "✗";
+            color: #f87171;
+            font-weight: bold;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-align: center;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #6366f1;
+            color: white;
+            border: none;
+        }
+        .btn-primary:hover {
+            background: #4f46e5;
+        }
+        .btn-recommended {
+            background: #6366f1;
+            color: white;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.3);
+        }
+        .btn-recommended:hover {
+            background: #4f46e5;
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+        }
+        footer {
+            text-align: center;
+            padding: 80px 0 40px;
+            color: #606068;
+            font-size: 0.875rem;
+        }
+        @media (max-width: 768px) {
+            .pricing-hero h1 { font-size: 2.8rem; }
+            .plans { grid-template-columns: 1fr; }
+            nav { flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">RAGNAROK</a>
+            <nav>
+                <span class="nav-disabled">Деньги за видео</span>
+                <a href="pay.html">Магазин</a>
+                <a href="https://www.dropbox.com/scl/fi/sdksloof97kd3wk6vvjca/Ragnarok.exe?rlkey=8ajpviag9sgghx1p2ssnk94vb&st=ee3jaq68&dl=1">Скачать лаунчер</a>
+            </nav>
+        </div>
+    </header>
+    <section class="pricing-hero">
+        <div class="container">
+            <h1>Тарифы</h1>
+            <p>Выберите подходящий план для комфортной игры на любом сервере</p>
+            <div class="toggle">
+                <!-- toggle остаётся пустым -->
+            </div>
+            <div class="plans">
+                <div class="plan">
+                    <div class="plan-name">Бесплатный</div>
+                    <div class="plan-price">0 ₽</div>
+                    <div class="plan-period">навсегда</div>
+                    <div class="includes">
+                        <strong>Включает:</strong>
+                        <div class="feature good">Бесплатно навсегда</div>
+                        <div class="feature good">Базовые функции</div>
+                        <div class="feature bad">Редкие обновления</div>
+                        <div class="feature bad">Нету лаунчера</div>
+                    </div>
+                    <a href="https://mega.nz/file/zhJTRBxJ#UvqJh5Su6sQHX05X-7Lgo-O1VNv4XHt_qdTdmdoOClI"  target="_blank" class="btn btn-primary">Начать бесплатно</a>
+                </div>
+                <div class="plan">
+                    <div class="plan-name">Classic</div>
+                    <div class="plan-price">249 ₽</div>
+                    <div class="plan-period">30 дней</div>
+                    <div class="includes">
+                        <strong>Всё из бесплатного +</strong>
+                        <div class="feature good">Есть лаунчер</div>
+                        <div class="feature good">Быстрые обновления</div>
+                        <div class="feature good">Поддержка популярных серверов</div>
+                        <div class="feature bad">Временный доступ</div>
+                    </div>
+                    <a href="https://funpay.com/lots/offer?id=64095619" target="_blank" class="btn btn-primary">Купить на 30 дней</a>	
+                </div>
+                <div class="plan recommended">
+                    <div class="recommended-badge">Рекомендуем</div>
+                    <div class="plan-name">Classic</div>
+                    <div class="plan-price">649 ₽</div>
+                    <div class="plan-period">навсегда</div>
+                    <div class="includes">
+                        <strong>Всё из 30-дневного +</strong>
+                        <div class="feature good">Пожизненный доступ</div>
+                        <div class="feature good">Приоритетные обновления</div>
+                        <div class="feature good">Надёжные обходы</div>
+                        <div class="feature good">Без ограничений</div>
+                    </div>
+                    <a href="https://funpay.com/lots/offer?id=64113768" target="_blank" class="btn btn-recommended">Купить навсегда</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer>
+        © 2024–2026 Ragnarok Client. Все права защищены.
+    </footer>
+</body>
+</html>

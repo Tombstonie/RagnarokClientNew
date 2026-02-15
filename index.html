@@ -4,139 +4,334 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ragnarok Client</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+		
+		
+        body {
+            background: #0d0d0f;
+            color: #e0e0e0;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: url('keyart.png') center/cover no-repeat fixed;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 1;
+        }
+        header {
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid #1f1f24;
+        }
+        .header-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-decoration: none;
+        }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+        nav a,
+        .nav-disabled {
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #a0a0a8;
+            transition: color 0.2s;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        .nav-disabled {
+            color: #505060;
+            cursor: not-allowed;
+        }
+        /* Стили для hero и остальных блоков остаются без изменений */
+        .hero {
+            position: relative;
+            z-index: 5;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 140px 32px 100px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 3.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 24px;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: #b0b0b8;
+            max-width: 720px;
+            margin: 0 auto 40px;
+        }
+        .hero strong {
+            color: #ffffff;
+        }
+        .btn {
+            display: inline-block;
+            padding: 14px 40px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 10px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background: #6366f1;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #4f46e5;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.25);
+        }
+        .faq {
+            position: relative;
+            z-index: 5;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 32px;
+        }
+        .faq h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        .faq-item {
+            background: #111114;
+            border: 1px solid #1f1f24;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 20px 24px;
+            font-weight: 600;
+            color: #ffffff;
+            cursor: pointer;
+            user-select: none;
+        }
+        .faq-answer {
+            padding: 0 24px 20px;
+            color: #b0b0b8;
+            display: none;
+        }
+        .faq-item.open .faq-answer {
+            display: block;
+        }
+        .guide {
+            position: relative;
+            z-index: 5;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 32px;
+            text-align: center;
+        }
+        .guide h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 60px;
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        .flip-card {
+            height: 280px;
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 16px;
+            background: #111114;
+            border: 1px solid #1f1f24;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+        }
+        .flip-card-front h3,
+        .flip-card-back h3 {
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+            color: #ffffff;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+            color: #d0d0d8;
+        }
+        footer {
+            position: relative;
+            z-index: 5;
+            text-align: center;
+            padding: 80px 0 40px;
+            color: #606068;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.8rem; }
+            .hero { padding-top: 100px; padding-bottom: 80px; }
+            nav { flex-wrap: wrap; gap: 20px; justify-content: center; }
+        }
+    </style>
 </head>
 <body>
-
-<div class="overlay"></div>
-
-<header>
-    <div class="logo">RAGNAROK</div>
-    <nav>
-        <span class="nav-disabled">Деньги за видео</span>
-        <a href="https://funpay.com/users/7997004/" target="_blank">Магазин</a>
-        <a href="#">Скачать лаунчер</a>
-    </nav>
-</header>
-
-<main class="hero">
-    <div class="content">
+    <div class="overlay"></div>
+    <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">RAGNAROK</a>
+            <nav>
+                <span class="nav-disabled">Деньги за видео</span>
+                <a href="pay.html">Магазин</a>
+                <a href="https://www.dropbox.com/scl/fi/sdksloof97kd3wk6vvjca/Ragnarok.exe?rlkey=8ajpviag9sgghx1p2ssnk94vb&st=ee3jaq68&dl=1">Скачать лаунчер</a>
+            </nav>
+        </div>
+    </header>
+    <main class="hero">
         <h1>О нашем клиенте</h1>
         <p>
-            Мы предоставляем бесплатный клиент для Minecraft с множеством полезных функций:
-            <br>
-            <strong>Auto Creeper Farm</strong>,
-            <strong>Air Stuck</strong>,
-            <strong>Swing Animation</strong>.
+            Мы предоставляем бесплатный клиент для Minecraft с множеством полезных функций:<br>
+            <strong>Auto Creeper Farm</strong>, <strong>Air Stuck</strong>, <strong>Swing Animation</strong>.
         </p>
-        <a href="#" class="btn-buy">Скачать</a>
-    </div>
-</main>
-
-<!-- FAQ -->
-<section class="faq">
-    <div class="faq-container">
+        <a href="pay.html" class="btn btn-primary">
+            Начать
+        </a>
+    </main>
+    <section class="faq">
         <h2>Часто задаваемые вопросы</h2>
-
         <div class="faq-item">
             <div class="faq-question">Почему при запуске вылезает ошибка?</div>
             <div class="faq-answer">
                 Установите <strong>Java 17+</strong>. Это необходимо для корректной работы клиента.
             </div>
         </div>
-
         <div class="faq-item">
             <div class="faq-question">Почему игра вылетает?</div>
             <div class="faq-answer">
                 Выделите больше ОЗУ в лаунчере. Рекомендуется минимум 4 ГБ.
             </div>
         </div>
-
         <div class="faq-item">
             <div class="faq-question">Почему мало FPS?</div>
             <div class="faq-answer">
                 Используйте Java 17 вместо Java 21 для лучшей стабильности.
             </div>
+
         </div>
-
-    </div>
-</section>
-
-<!-- FLIP КАРТОЧКИ -->
-<section class="guide">
-    <h2>Руководство по сложным функциям</h2>
-
-    <div class="card-container">
-
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <h3>Auto Creeper Farm</h3>
-                    <p>Автоматическая охота на криперов</p>
+		
+		        <div class="faq-item">
+            <div class="faq-question">Как установить бесплатную версию?</div>
+            <div class="faq-answer">
+                Перейдите по сыллке для скачивания, скачайте архив, и распакуйте его в папку versions. 
+            </div>
+    </section>
+    <section class="guide">
+        <h2>Руководство по сложным модулям</h2>
+        <div class="card-container">
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Auto Creeper Farm</h3>
+                        <p>Автоматическая охота на криперов</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Как использовать</h3>
+                        <p>
+                            1. Встаньте на 1 угол вашей фермы и пропишите .creeper pos1<br>
+                            2. Встаньте на 2 угол вашей фермы и пропишите .creeper pos2<br>
+                            3. Включите модуль Auto Creeper Farm
+                        </p>
+                    </div>
                 </div>
-                <div class="flip-card-back">
-                    <h3>Как использовать</h3>
-                    <p>
-                        1. Встаньте на 1 угол вашей фермы и пропишите .creeper pos1<br>
-                        2. Встаньте на 2 угол вашей фермы и пропишите .creeper pos2<br>
-                        3. Включите функцию Auto Creeper Farm
-                    </p>
+            </div>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Cocoa Farm</h3>
+                        <p>Фарм какао бобов</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Как использовать</h3>
+                        <p>
+                            1. Встаньте на 1 угол вашей фермы и пропишите .cf pos1<br>
+                            2. Встаньте на 2 угол вашей фермы и пропишите .cf pos2<br>
+                            3. Включите модуль Cocoa Farm
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="flip-card">
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <h3>Auto Event Loot</h3>
+                        <p>Авто лут ивентов фантайм</p>
+                    </div>
+                    <div class="flip-card-back">
+                        <h3>Как использовать</h3>
+                        <p>
+                            1. В модуле ElytraHelper включите Автопрыжок<br>
+                            2. Назначьте бинд Swap Elytra на клавишу H<br>
+                            3. В модуле ChestStealer назначьте бинд на клавишу K<br>
+                            - НУЖНО: Феерверки, перки, ботинки невесомость IV
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <h3>Cocoa Farm</h3>
-                    <p>Фарм какао бобов</p>
-                </div>
-                <div class="flip-card-back">
-                    <h3>Как использовать</h3>
-                    <p>
-                        1. Встаньте на 1 угол вашей фермы и пропишите .cf pos1<br>
-                        2. Встаньте на 2 угол вашей фермы и пропишите .cf pos2<br>
-                        3. Включите функцию Cocoa Farm
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <h3>Auto Event Loot</h3>
-                    <p>Авто лут ивентов фантайм</p>
-                </div>
-                <div class="flip-card-back">
-                    <h3>Как использовать</h3>
-                   <p>
-    — В модуле ElytraHelper включите Автопрыжок<br>
-    — Назначьте бинд Swap Elytra на клавишу H<br>
-    — В модуле ChestStealer назначьте бинд на клавишу K<br><br>
-
-    Необходимые предметы:<br>
-    — 2 стака фейерверков<br>
-    — 2 стака эндер перлов<br>
-    — Тотем бессмертия<br>
-    — Ботинки «Невесомость IV»
-</p>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<footer>
-    <p>&copy; 2024-2026 Ragnarok Client</p>
-</footer>
-
+    </section>
+    <footer>
+        © 2024–2026 Ragnarok Client. Все права защищены.
+    </footer>
+    <script>
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                const item = q.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+    </script>
 </body>
 </html>
-
-
-
-
